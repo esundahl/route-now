@@ -2,7 +2,7 @@
 Express inspired ultra fast and minimalist router for serverless functions. Uses [trouter](https://www.npmjs.com/package/trouter#trouteraddmethod-pattern-handlers) and [qs](https://www.npmjs.com/package/qs)
 
 ```js
-	const Router = require('router-now')
+	const Router = require('route-now')
 	const app = Router()
 	app.use(authenticate)
 	app.get('/', handle)
