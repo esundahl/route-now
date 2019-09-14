@@ -1,23 +1,21 @@
 const test = require('tape')
 const Router = require('../')
 
-test('test', t => {
-	t.plan(5)
+test('test', async t => {
+
+	t.plan(3)
+
 
 	Router()
-		.get('/*', (req, res) => {
-			t.ok(req.method, 'GET', 'Should be a GET method')
-			t.ok(req.url, '/foo/bar', 'Should have a proper url')
-			return {req, res}
-		})
-		.get('/:foo/:bar', (req, res) => {
-			t.equal(req.params.foo, 'foo', 'should have `foo` param set')
-			t.equal(req.params.bar, 'bar', 'should have `bar` param set')
-		})
-		.handler({method: 'GET', url: '/foo/bar'})
+		.get('/throw', _ => { throw 'Should catch a throw' })
+		.catch(t.pass)
+		.handler({method: 'GET', url: '/throw'})
 
-	Router().get('/:table/*', (req, res) => {
-		t.ok(req.params.table, 'foo')
-	})
-		.handler({method: 'GET', url: '/foo/bar?beep=boop'})
+	Router()
+			.get('/reject', _ => Promise.reject({status: 401, message: 'Unauthorized'}))
+			.catch((err, req, res) => {
+				t.equal(err.status, 401)
+				t.equal(err.message, 'Unauthorized')
+			})
+			.handler({method: 'GET', url: '/reject'})
 })

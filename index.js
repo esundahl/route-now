@@ -4,7 +4,10 @@ const qs = require('qs').parse
 
 module.exports = function Router(opts) {
 	const router = new Trouter()
-	router.catch = fn => (router.errs = fn)
+	router.catch = fn => {
+		router.errs = fn
+		return router
+	}
 	router.errs = (e, req, res) => res.status(e.statusCode || e.status || 500)
 	router.handler = (req, res) => {
 		const {pathname, query} = parse(req.url)
