@@ -12,6 +12,11 @@ Express inspired ultra fast and minimalist router for serverless functions. Uses
 
 	module.exports = app.handler
 
+	function authenticate(req, res) {
+		if (!auth) return res.status(401)
+		return {req, res}
+	}
+
 	function handle(req, res) {
 		res.json({foo: 'bar'})
 	}
