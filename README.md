@@ -1,6 +1,8 @@
 
 Express inspired ultra fast and minimalist router for serverless functions. Uses [trouter](https://www.npmjs.com/package/trouter#trouteraddmethod-pattern-handlers) and [qs](https://www.npmjs.com/package/qs)
 
+**Note:** The api is still in flux. I would not use this library yet.
+
 ```js
 	const Router = require('route-now')
 	const app = Router()
@@ -13,8 +15,7 @@ Express inspired ultra fast and minimalist router for serverless functions. Uses
 	module.exports = app.handler
 
 	function authenticate(req, res) {
-		if (!auth) return res.status(401)
-		return {req, res}
+		if (!auth) throw({statusCode: 401})
 	}
 
 	function handle(req, res) {
